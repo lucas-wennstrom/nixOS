@@ -1,0 +1,13 @@
+#nix build results
+result
+result-*
+
+#editor/os stuff
+.dirvenv/
+.envrc
+*.swp
+.DS_Store
+
+# Secrets
+secrets.yaml
+*.age

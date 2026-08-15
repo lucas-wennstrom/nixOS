@@ -1,0 +1,21 @@
+{
+  "logo": {
+    "source": "nixos",
+    "color": {
+      "1": "white",
+      "2": "white",
+      "3": "white",
+      "4": "white",
+      "5": "white",
+      "6": "white"
+    }
+  },
+  "modules": [
+    "title",
+    "seperato",
+    "os",
+    "host",
+    "memory",
+    "disk"
+  ]
+}
