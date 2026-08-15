@@ -38,7 +38,14 @@
     enable = true;
     settings.user.name = "lucas-wennstrom";
     settings.user.email= "lucas.william.wennstrom@gmail.com";
-	};
+  includes = [
+    {
+      condition ="gitdir:~/Skola/**";
+      contents.user.name = "lucw380";
+      contents.user.email = "lucwe380@student.liu.se";
+    }
+  ];
+  };
   };
 
 
