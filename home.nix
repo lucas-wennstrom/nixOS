@@ -1,18 +1,18 @@
 { config, pkgs, inputs, ... }:
-  let 
-    dotfiles = "${config.home.homeDirectory}/NixOS/config";
-    create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
-    configs = {
-      niri = "niri";
-      noctalia = "noctalia";
-      nvim = "nvim";
-      kitty = "kitty";
-      fuzzel = "fuzzel";
-      thunar = "thunar";
-      fastfetch = "fastfetch";
-    };
-  in
-  {
+let
+  dotfiles = "${config.home.homeDirectory}/NixOS/config";
+  create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
+  configs = {
+    niri = "niri";
+    noctalia = "noctalia";
+    nvim = "nvim";
+    kitty = "kitty";
+    fuzzel = "fuzzel";
+    thunar = "thunar";
+    fastfetch = "fastfetch";
+  };
+in
+{
   imports = [
     inputs.noctalia.homeModules.default
   ];
@@ -20,7 +20,7 @@
   home.username = "lucas";
   home.homeDirectory = "/home/lucas";
   home.stateVersion = "26.05";
-  programs = { 
+  programs = {
     bash = {
       enable = true;
       shellAliases = {
@@ -42,19 +42,18 @@
     git = {
       enable = true;
       settings.user.name = "lucas-wennstrom";
-      settings.user.email= "lucas.william.wennstrom@gmail.com";
-      includes = [ {
-        condition ="gitdir:~/Skola/**";
+      settings.user.email = "lucas.william.wennstrom@gmail.com";
+      includes = [{
+        condition = "gitdir:~/Skola/**";
         contents.user.name = "lucw380";
         contents.user.email = "lucwe380@student.liu.se";
-      }
-      ];
+      }];
     };
     zoxide = {
       enable = true;
       enableBashIntegration = true;
     };
-    
+
   };
 
 
@@ -79,7 +78,6 @@
     wl-clipboard
     starship
     spotify
-    discord
     claude-code
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
     wget
