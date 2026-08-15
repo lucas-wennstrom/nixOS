@@ -20,32 +20,41 @@
   home.username = "lucas";
   home.homeDirectory = "/home/lucas";
   home.stateVersion = "26.05";
-  programs = {
-	bash.enable = true;
-	noctalia.enable = true;
-  starship = {
-    enable = true;
-    settings = {
-      format = "\${custom.nixos}$directory$character";
-      custom.nixos = {
-      command = "echo ❄";
-      when = true;
-      format = "[$output]($style) ";
+  programs = { 
+    bash = {
+      enable = true;
+      shellAliases = {
+        cd = "z";
       };
     };
-  };
-  git = {
-    enable = true;
-    settings.user.name = "lucas-wennstrom";
-    settings.user.email= "lucas.william.wennstrom@gmail.com";
-  includes = [
-    {
-      condition ="gitdir:~/Skola/**";
-      contents.user.name = "lucw380";
-      contents.user.email = "lucwe380@student.liu.se";
-    }
-  ];
-  };
+    noctalia.enable = true;
+    starship = {
+      enable = true;
+      settings = {
+        format = "\${custom.nixos}$directory$character";
+        custom.nixos = {
+          command = "echo ❄";
+          when = true;
+          format = "[$output]($style) ";
+        };
+      };
+    };
+    git = {
+      enable = true;
+      settings.user.name = "lucas-wennstrom";
+      settings.user.email= "lucas.william.wennstrom@gmail.com";
+      includes = [ {
+        condition ="gitdir:~/Skola/**";
+        contents.user.name = "lucw380";
+        contents.user.email = "lucwe380@student.liu.se";
+      }
+      ];
+    };
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+    
   };
 
 
