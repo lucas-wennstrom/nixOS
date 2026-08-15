@@ -1,6 +1,6 @@
 { config, pkgs, inputs, ... }:
   let 
-    dotfiles = "${config.home.homeDirectory}/nixos-dotfiles/config";
+    dotfiles = "${config.home.homeDirectory}/NixOS/config";
     create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
     configs = {
       niri = "niri";
@@ -67,17 +67,17 @@
 
   home.packages = with pkgs; [
     neovim
-	  vscode
-	  ripgrep
-	  nil
-	  nixpkgs-fmt
-	  nodejs
-	  gcc
+    vscode
+    ripgrep
+    nil
+    nixpkgs-fmt
+    nodejs
+    gcc
     fastfetch
-  	feh
-	  fuzzel
-	  wl-clipboard
-	  starship
+    feh
+    fuzzel
+    wl-clipboard
+    starship
     spotify
     discord
     claude-code
@@ -86,5 +86,6 @@
     kitty
     obsidian
     git
+    zoxide
   ];
 }
