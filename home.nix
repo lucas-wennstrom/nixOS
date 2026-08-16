@@ -20,14 +20,15 @@ in
   home.username = "lucas";
   home.homeDirectory = "/home/lucas";
   home.stateVersion = "26.05";
+
   programs = {
+    # --- Shell ---
     bash = {
       enable = true;
       shellAliases = {
         cd = "z";
       };
     };
-    noctalia.enable = true;
     starship = {
       enable = true;
       settings = {
@@ -39,6 +40,15 @@ in
         };
       };
     };
+    zoxide = {
+      enable = true;
+      enableBashIntegration = true;
+    };
+
+    # --- Desktop ---
+    noctalia.enable = true;
+
+    # --- Dev ---
     git = {
       enable = true;
       settings.user.name = "lucas-wennstrom";
@@ -49,13 +59,7 @@ in
         contents.user.email = "lucwe380@student.liu.se";
       }];
     };
-    zoxide = {
-      enable = true;
-      enableBashIntegration = true;
-    };
-
   };
-
 
   xdg.configFile = builtins.mapAttrs
     (name: subpath: {
@@ -65,27 +69,44 @@ in
     configs;
 
   home.packages = with pkgs; [
+    # --- Editors / IDE ---
     neovim
     vscode
-    ripgrep
+
+    # --- C++ toolchain ---
+    gcc
+    gnumake
+    cmake
+    ninja
+    gdb
+    clang-tools
+    pkg-config
+    valgrind
+
+    # --- Other languages / Nix tooling ---
+    nodejs
     nil
     nixpkgs-fmt
-    nodejs
-    gcc
-    fastfetch
-    feh
-    fuzzel
-    wl-clipboard
-    starship
-    spotify
-    claude-code
-    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
+
+    # --- CLI utilities ---
+    ripgrep
     wget
-    kitty
-    obsidian
-    git
+    wl-clipboard
+    fastfetch
     zoxide
+    git
+    starship
+
+    # --- Desktop / WM ---
+    kitty
+    fuzzel
+    feh
     thunar
 
+    # --- Apps ---
+    spotify
+    obsidian
+    claude-code
+    inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
   ];
 }
