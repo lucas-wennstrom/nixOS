@@ -5,7 +5,6 @@ let
   configs = {
     niri = "niri";
     noctalia = "noctalia";
-    nvim = "nvim";
     kitty = "kitty";
     fuzzel = "fuzzel";
     thunar = "thunar";
@@ -95,6 +94,7 @@ in
     nodejs
     nil
     nixpkgs-fmt
+    alejandra
 
     # --- CLI utilities ---
     ripgrep

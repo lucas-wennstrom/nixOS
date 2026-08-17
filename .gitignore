@@ -11,3 +11,4 @@ result-*
 # Secrets
 secrets.yaml
 *.age
+config/helix/runtime/grammars/sources/

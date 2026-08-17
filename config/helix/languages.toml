@@ -1,0 +1,11 @@
+[language-server.nil]
+command = "nil"
+
+[language-server.nil.config.nil]
+formatting = { command = ["alejandra"] }
+
+[[language]]
+name = "nix"
+language-servers = ["nil"]
+auto-format = true
+formatter = { command = "alejandra" }

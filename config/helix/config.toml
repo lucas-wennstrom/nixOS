@@ -1,0 +1,75 @@
+theme = "nord"
+
+[editor]
+line-number = "relative"
+cursorline = true
+cursorcolumn = false
+color-modes = true
+bufferline = "multiple"
+true-color = true
+rulers = [80, 100]
+idle-timeout = 400
+completion-timeout = 250
+auto-completion = true
+auto-format = true
+auto-save = false
+undercurl = true
+scrolloff = 5
+scroll-lines = 3
+mouse = true
+
+[editor.cursor-shape]
+insert = "bar"
+normal = "block"
+select = "underline"
+
+[editor.statusline]
+left = ["mode", "spinner", "file-name", "file-modification-indicator"]
+center = []
+right = ["diagnostics", "selections", "position", "file-encoding", "file-line-ending", "file-type"]
+separator = "│"
+mode.normal = "NORMAL"
+mode.insert = "INSERT"
+mode.select = "SELECT"
+
+[editor.lsp]
+display-messages = true
+display-inlay-hints = true
+display-signature-help-docs = true
+auto-signature-help = true
+snippets = true
+
+[editor.indent-guides]
+render = true
+character = "│"
+skip-levels = 1
+
+[editor.whitespace.render]
+space = "none"
+tab = "all"
+newline = "none"
+
+[editor.gutters]
+layout = ["diagnostics", "spacer", "line-numbers", "spacer", "diff"]
+
+[editor.file-picker]
+hidden = false
+git-ignore = true
+
+[editor.search]
+smart-case = true
+wrap-around = true
+
+[editor.soft-wrap]
+enable = false
+
+[keys.normal]
+# space-mode extras
+"C-s" = ":w"
+"C-q" = ":q"
+
+[keys.normal.space]
+"w" = ":w"
+"q" = ":q"
+"space" = "file_picker"
+"/" = "global_search"
