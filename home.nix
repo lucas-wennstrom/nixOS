@@ -117,6 +117,7 @@ in {
     zoxide
     git
     starship
+    btop
 
     # --- Desktop / WM ---
     kitty
