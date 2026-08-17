@@ -1,5 +1,9 @@
-{ config, pkgs, inputs, ... }:
-let
+{
+  config,
+  pkgs,
+  inputs,
+  ...
+}: let
   dotfiles = "${config.home.homeDirectory}/NixOS/config";
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
@@ -11,8 +15,7 @@ let
     fastfetch = "fastfetch";
     helix = "helix";
   };
-in
-{
+in {
   imports = [
     inputs.noctalia.homeModules.default
   ];
@@ -53,15 +56,27 @@ in
       enable = true;
       settings.user.name = "lucas-wennstrom";
       settings.user.email = "lucas.william.wennstrom@gmail.com";
-      includes = [{
-        condition = "gitdir:~/Skola/**";
-        contents.user.name = "lucw380";
-        contents.user.email = "lucwe380@student.liu.se";
-      }];
+      includes = [
+        {
+          condition = "gitdir:~/Skola/**";
+          contents.user.name = "lucw380";
+          contents.user.email = "lucwe380@student.liu.se";
+        }
+      ];
     };
   };
 
-  xdg.configFile = builtins.mapAttrs
+  # --- Fonts ---
+  fonts.fontconfig = {
+    enable = true;
+    defaultFonts = {
+      monospace = ["JetBrainsMono Nerd Font"];
+      sansSerif = ["JetBrainsMono Nerd Font"];
+    };
+  };
+
+  xdg.configFile =
+    builtins.mapAttrs
     (name: subpath: {
       source = create_symlink "${dotfiles}/${subpath}";
       recursive = true;
@@ -82,7 +97,7 @@ in
     pkg-config
     valgrind
 
-    # --- Rust toolcain --- 
+    # --- Rust toolcain ---
     rustc
     cargo
     rust-analyzer
