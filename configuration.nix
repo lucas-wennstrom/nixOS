@@ -49,10 +49,6 @@
   };
   boot.loader.systemd-boot.configurationLimit = 4;
 
-  # Shutdown speed
-  systemd.settings.Manager = {
-    DefaultTimeoutStopSec = "3s";
-  };
   # which niri talks to via the same D-Bus interface Mutter uses.
   security.rtkit.enable = true;
   services.pipewire = {
