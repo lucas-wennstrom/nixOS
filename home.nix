@@ -11,7 +11,6 @@
     noctalia = "noctalia";
     kitty = "kitty";
     fuzzel = "fuzzel";
-    thunar = "thunar";
     fastfetch = "fastfetch";
     helix = "helix";
   };
@@ -123,7 +122,7 @@ in {
     kitty
     fuzzel
     feh
-    thunar
+    yazi
 
     # --- Apps ---
     spotify
