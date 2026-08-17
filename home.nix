@@ -71,7 +71,6 @@ in
   home.packages = with pkgs; [
     # --- Editors / IDE ---
     helix
-    vscode
 
     # --- C++ toolchain ---
     gcc
