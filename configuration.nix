@@ -1,11 +1,14 @@
-{ config, lib, pkgs, inputs, ... }:
-
 {
-  imports =
-    [
-      ./hardware-configuration.nix
-      inputs.niri.nixosModules.niri
-    ];
+  config,
+  lib,
+  pkgs,
+  inputs,
+  ...
+}: {
+  imports = [
+    ./hardware-configuration.nix
+    inputs.niri.nixosModules.niri
+  ];
 
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -17,12 +20,12 @@
   services.upower.enable = true;
   systemd.services.batter-charge-threshold = {
     description = "Set Thinkpad batter-charge-threshold to 80%";
-    wantedBy = [ "multi-user.target" "suspend.target" "hibernate.target" ];
-    after = [ "suspend.target" "hibernate.target" ];
+    wantedBy = ["multi-user.target" "suspend.target" "hibernate.target"];
+    after = ["suspend.target" "hibernate.target"];
     serviceConfig = {
       type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "set-charge-threshold" ''
-      echo 80 > /sys/class/power_supply/BAT0/charge_control_end_threshold''}";
+          echo 80 > /sys/class/power_supply/BAT0/charge_control_end_threshold''}";
     };
   };
 
@@ -37,9 +40,15 @@
       session_log = "/tmp/ly-session.log";
     };
   };
-  
 
-  # Screen sharing in niri goes through the GNOME portal backend,
+  # Generation -deletion
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 3d";
+  };
+  boot.loader.systemd-boot.configurationLimit = 4;
+
   # which niri talks to via the same D-Bus interface Mutter uses.
   security.rtkit.enable = true;
   services.pipewire = {
@@ -52,14 +61,14 @@
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
-    extraPortals = [ pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = [ "gtk" ];
+    extraPortals = [pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk];
+    config.common.default = ["gtk"];
   };
 
   nixpkgs.config.allowUnfree = true;
   users.users.lucas = {
     isNormalUser = true;
-    extraGroups = [ "wheel" ];
+    extraGroups = ["wheel"];
     packages = with pkgs; [
       tree
     ];
@@ -79,8 +88,6 @@
 
   fonts.fontconfig.enable = true;
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = ["nix-command" "flakes"];
   system.stateVersion = "26.05";
-
 }
-
