@@ -10,16 +10,20 @@
     inputs.niri.nixosModules.niri
   ];
 
+  # --- Boot ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader.systemd-boot.configurationLimit = 4;
 
+  # --- Networking ---
   networking.hostName = "nixos";
-
   networking.networkmanager.enable = true;
+
+  # --- Power management ---
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
   systemd.services.batter-charge-threshold = {
-    description = "Set Thinkpad batter-charge-threshold to 80%";
+    description = "Set Thinkpad battery charge threshold to 80%";
     wantedBy = ["multi-user.target" "suspend.target" "hibernate.target"];
     after = ["suspend.target" "hibernate.target"];
     serviceConfig = {
@@ -29,10 +33,11 @@
     };
   };
 
+  # --- Locale ---
   time.timeZone = "Europe/Stockholm";
-
   console.keyMap = "sv-latin1";
 
+  # --- Desktop ---
   programs.niri.enable = true;
   services.displayManager.ly = {
     enable = true;
@@ -41,15 +46,7 @@
     };
   };
 
-  # Generation -deletion
-  nix.gc = {
-    automatic = true;
-    dates = "daily";
-    options = "--delete-older-than 3d";
-  };
-  boot.loader.systemd-boot.configurationLimit = 4;
-
-  # which niri talks to via the same D-Bus interface Mutter uses.
+  # --- Audio ---
   security.rtkit.enable = true;
   services.pipewire = {
     enable = true;
@@ -58,6 +55,8 @@
     pulse.enable = true;
   };
 
+  # --- Desktop portals ---
+  # Portals talk to niri over the same D-Bus interface Mutter uses.
   xdg.portal = {
     enable = true;
     xdgOpenUsePortal = true;
@@ -65,7 +64,21 @@
     config.common.default = ["gtk"];
   };
 
-  nixpkgs.config.allowUnfree = true;
+  # --- Bluetooth ---
+  hardware.bluetooth = {
+    enable = true;
+    powerOnBoot = false;
+  };
+  services.blueman.enable = true;
+
+  # --- Fonts ---
+  fonts.packages = with pkgs; [
+    nerd-fonts.jetbrains-mono
+    noto-fonts-color-emoji
+  ];
+  fonts.fontconfig.enable = true;
+
+  # --- Users ---
   users.users.lucas = {
     isNormalUser = true;
     extraGroups = ["wheel"];
@@ -74,20 +87,14 @@
     ];
   };
 
-  #FOR BLUETOOTH
-  hardware.bluetooth = {
-    enable = true;
-    powerOnBoot = false;
-  };
-  services.blueman.enable = true;
-
-  fonts.packages = with pkgs; [
-    nerd-fonts.jetbrains-mono
-    noto-fonts-color-emoji
-  ];
-
-  fonts.fontconfig.enable = true;
-
+  # --- Nix ---
   nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.gc = {
+    automatic = true;
+    dates = "daily";
+    options = "--delete-older-than 3d";
+  };
+  nixpkgs.config.allowUnfree = true;
+
   system.stateVersion = "26.05";
 }

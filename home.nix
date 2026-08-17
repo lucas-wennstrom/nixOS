@@ -127,6 +127,7 @@ in {
     # --- Apps ---
     spotify
     obsidian
+    typst
     claude-code
     inputs.zen-browser.packages."${pkgs.stdenv.hostPlatform.system}".default
   ];
