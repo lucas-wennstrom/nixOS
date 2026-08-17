@@ -10,6 +10,7 @@ let
     fuzzel = "fuzzel";
     thunar = "thunar";
     fastfetch = "fastfetch";
+    helix = "helix";
   };
 in
 {
@@ -70,7 +71,7 @@ in
 
   home.packages = with pkgs; [
     # --- Editors / IDE ---
-    neovim
+    helix
     vscode
 
     # --- C++ toolchain ---
@@ -82,6 +83,13 @@ in
     clang-tools
     pkg-config
     valgrind
+
+    # --- Rust toolcain --- 
+    rustc
+    cargo
+    rust-analyzer
+    rustfmt
+    clippy
 
     # --- Other languages / Nix tooling ---
     nodejs

@@ -16,7 +16,7 @@
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
   systemd.services.batter-charge-threshold = {
-    description = "Set Thinkpad batter-charge-threshold to 85%";
+    description = "Set Thinkpad batter-charge-threshold to 80%";
     wantedBy = [ "multi-user.target" "suspend.target" "hibernate.target" ];
     after = [ "suspend.target" "hibernate.target" ];
     serviceConfig = {
@@ -37,6 +37,7 @@
       session_log = "/tmp/ly-session.log";
     };
   };
+  
 
   # Screen sharing in niri goes through the GNOME portal backend,
   # which niri talks to via the same D-Bus interface Mutter uses.
@@ -52,7 +53,7 @@
     enable = true;
     xdgOpenUsePortal = true;
     extraPortals = [ pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk ];
-    config.common.default = [ "gnome" ];
+    config.common.default = [ "gtk" ];
   };
 
   nixpkgs.config.allowUnfree = true;
