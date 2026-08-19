@@ -92,8 +92,8 @@ screenshot-path "~/Pictures/Screenshots/Screenshot from %Y-%m-%d %H-%M-%S.png"
 // Dim inactive windows only -- keeping the active window fully opaque
 // avoids the focus-ring's backing rectangle showing through it.
 window-rule {
-    match is-active=false
-    opacity 0.90
+    opacity 0.96
+    draw-border-with-background false
 }
 
 // Rounded corners for all windows.
@@ -111,7 +111,7 @@ binds {
     // --- Launchers ---
     Mod+T hotkey-overlay-title="Open a Terminal: kitty" { spawn "kitty"; }
     Mod+D hotkey-overlay-title="Run an Application: fuzzel" { spawn "fuzzel"; }
-    Mod+P hotkey-overlay-title="Run a browser: Zen" { spawn "zen-beta"; }
+    Mod+P hotkey-overlay-title="Run a browser: brave" { spawn "brave"; }
     Mod+E hotkey-overlay-title="Open filemanager: yazi" { spawn "kitty" "-e" "yazi"; }
     Super+Alt+L hotkey-overlay-title="Lock the Screen: swaylock" { spawn "swaylock"; }
     Super+Alt+S allow-when-locked=true hotkey-overlay-title=null { spawn-sh "pkill orca || exec orca"; }
