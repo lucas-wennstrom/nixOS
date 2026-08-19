@@ -19,6 +19,21 @@ in {
     inputs.noctalia.homeModules.default
   ];
 
+  home.sessionVariables = {
+    XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
+    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
+      pkgs.wayland
+      pkgs.libxkbcommon
+      pkgs.libdecor
+      pkgs.mesa
+      pkgs.libx11
+      pkgs.libxcursor
+      pkgs.libxi
+      pkgs.libxrandr
+      pkgs.libglvnd
+    ];
+  };
+
   home.username = "lucas";
   home.homeDirectory = "/home/lucas";
   home.stateVersion = "26.05";
@@ -86,6 +101,17 @@ in {
     # --- Editors / IDE ---
     helix
 
+    # --- Display ---
+    wayland
+    libxkbcommon
+    libdecor
+    mesa
+    libx11
+    libxcursor
+    libxi
+    libxrandr
+    libglvnd
+
     # --- C++ toolchain ---
     gcc
     gnumake
@@ -131,5 +157,6 @@ in {
     typst
     claude-code
     brave
+    osu-lazer-bin
   ];
 }
