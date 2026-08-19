@@ -57,7 +57,7 @@ in {
       settings.user.email = "lucas.william.wennstrom@gmail.com";
       includes = [
         {
-          condition = "gitdir:~/Skola/**";
+          condition = "gitdir:~/School/**";
           contents.user.name = "lucw380";
           contents.user.email = "lucwe380@student.liu.se";
         }
