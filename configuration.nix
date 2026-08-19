@@ -29,7 +29,7 @@
     serviceConfig = {
       type = "oneshot";
       ExecStart = "${pkgs.writeShellScript "set-charge-threshold" ''
-          echo 80 > /sys/class/power_supply/BAT0/charge_control_end_threshold''}";
+          echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold''}";
     };
   };
 
