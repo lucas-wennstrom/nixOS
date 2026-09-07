@@ -34,6 +34,43 @@ in {
     ];
   };
 
+  services.kanshi = {
+    enable = true;
+    settings = [
+      {
+        profile.name = "docked";
+        profile.outputs = [
+          {
+            criteria = "DP-1";
+            status = "enable";
+          }
+          {
+            criteria = "eDP-1";
+            status = "disable";
+          }
+        ];
+      }
+      {
+        profile.name = "undocked";
+        profile.outputs = [
+          {
+            criteria = "eDP-1";
+            status = "enable";
+          }
+        ];
+      }
+    ];
+  };
+
+  systemd.user.services.opentabletdriver = {
+    Unit.Description = "OpenTabletDriver deamon";
+    Service = {
+      ExecStart = "${pkgs.opentabletdriver}/bin/otd-daemon";
+      Restart = "on-failure";
+    };
+    Install.WantedBy = ["graphical-session.target"];
+  };
+
   home.username = "lucas";
   home.homeDirectory = "/home/lucas";
   home.stateVersion = "26.05";
@@ -111,6 +148,7 @@ in {
     libxi
     libxrandr
     libglvnd
+    xwayland-satellite
 
     # --- C++ toolchain ---
     gcc
@@ -149,7 +187,6 @@ in {
     kitty
     fuzzel
     feh
-    yazi
 
     # --- Apps ---
     spotify
@@ -158,5 +195,7 @@ in {
     claude-code
     brave
     osu-lazer-bin
+    opentabletdriver
+    thunar
   ];
 }

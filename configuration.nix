@@ -46,6 +46,15 @@
     };
   };
 
+  hardware.opentabletdriver.enable = true;
+  systemd.services.opentabletdriver.enable = false;
+  # --- steam ---
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true;
+    dedicatedServer.openFirewall = true;
+  };
+
   # --- Audio ---
   security.rtkit.enable = true;
   services.pipewire = {
@@ -84,6 +93,7 @@
     extraGroups = ["wheel"];
     packages = with pkgs; [
       tree
+      widevine-cdm
     ];
   };
 
@@ -95,6 +105,12 @@
     options = "--delete-older-than 3d";
   };
   nixpkgs.config.allowUnfree = true;
+
+  # --- Graphics ---
+  hardware.graphics = {
+    enable = true;
+    enable32Bit = true;
+  };
 
   system.stateVersion = "26.05";
 }
