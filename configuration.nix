@@ -33,6 +33,16 @@
     };
   };
 
+  # --- VM ---
+  boot.kernelModules = ["kvm-amd"]; # Use only the one relevant to your CPU
+  virtualisation.libvirtd.enable = true;
+
+  environment.systemPackages = with pkgs; [
+    virt-manager
+  ];
+
+  systemd.tmpfiles.rules = ["L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware"];
+
   # --- Locale ---
   time.timeZone = "Europe/Stockholm";
   console.keyMap = "sv-latin1";
@@ -44,15 +54,6 @@
     settings = {
       session_log = "/tmp/ly-session.log";
     };
-  };
-
-  hardware.opentabletdriver.enable = true;
-  systemd.services.opentabletdriver.enable = false;
-  # --- steam ---
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true;
-    dedicatedServer.openFirewall = true;
   };
 
   # --- Audio ---
@@ -90,7 +91,7 @@
   # --- Users ---
   users.users.lucas = {
     isNormalUser = true;
-    extraGroups = ["wheel"];
+    extraGroups = ["wheel" "networkmanager" "libvirtd"];
     packages = with pkgs; [
       tree
       widevine-cdm
@@ -106,7 +107,7 @@
   };
   nixpkgs.config.allowUnfree = true;
 
-  # --- Graphics ---
+  # --- Graphics ---to show the full, detailed trace)
   hardware.graphics = {
     enable = true;
     enable32Bit = true;

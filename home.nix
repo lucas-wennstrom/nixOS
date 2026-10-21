@@ -46,7 +46,7 @@ in {
           }
           {
             criteria = "eDP-1";
-            status = "disable";
+            status = "enable";
           }
         ];
       }
@@ -60,15 +60,6 @@ in {
         ];
       }
     ];
-  };
-
-  systemd.user.services.opentabletdriver = {
-    Unit.Description = "OpenTabletDriver deamon";
-    Service = {
-      ExecStart = "${pkgs.opentabletdriver}/bin/otd-daemon";
-      Restart = "on-failure";
-    };
-    Install.WantedBy = ["graphical-session.target"];
   };
 
   home.username = "lucas";
@@ -137,6 +128,7 @@ in {
   home.packages = with pkgs; [
     # --- Editors / IDE ---
     helix
+    zed-editor
 
     # --- Display ---
     wayland
@@ -161,11 +153,7 @@ in {
     valgrind
 
     # --- Rust toolcain ---
-    rustc
-    cargo
-    rust-analyzer
-    rustfmt
-    clippy
+    rustup
 
     # --- Other languages / Nix tooling ---
     nodejs
@@ -181,7 +169,6 @@ in {
     zoxide
     git
     starship
-    btop
 
     # --- Desktop / WM ---
     kitty
@@ -194,8 +181,6 @@ in {
     typst
     claude-code
     brave
-    osu-lazer-bin
-    opentabletdriver
-    thunar
+    unzip
   ];
 }
