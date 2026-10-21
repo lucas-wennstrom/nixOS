@@ -8,9 +8,7 @@
   create_symlink = path: config.lib.file.mkOutOfStoreSymlink path;
   configs = {
     niri = "niri";
-    noctalia = "noctalia";
     kitty = "kitty";
-    fuzzel = "fuzzel";
     fastfetch = "fastfetch";
     helix = "helix";
   };
@@ -18,21 +16,6 @@ in {
   imports = [
     inputs.noctalia.homeModules.default
   ];
-
-  home.sessionVariables = {
-    XDG_DATA_DIRS = "$HOME/.nix-profile/share:$XDG_DATA_DIRS";
-    LD_LIBRARY_PATH = pkgs.lib.makeLibraryPath [
-      pkgs.wayland
-      pkgs.libxkbcommon
-      pkgs.libdecor
-      pkgs.mesa
-      pkgs.libx11
-      pkgs.libxcursor
-      pkgs.libxi
-      pkgs.libxrandr
-      pkgs.libglvnd
-    ];
-  };
 
   services.kanshi = {
     enable = true;
@@ -70,9 +53,10 @@ in {
     # --- Shell ---
     bash = {
       enable = true;
-      shellAliases = {
-        cd = "z";
-      };
+      # Some launchers export NO_COLOR, which disables Helix syntax colours.
+      initExtra = ''
+        unset NO_COLOR
+      '';
     };
     starship = {
       enable = true;
@@ -88,6 +72,7 @@ in {
     zoxide = {
       enable = true;
       enableBashIntegration = true;
+      options = ["--cmd" "cd"];
     };
 
     # --- Desktop ---
@@ -96,8 +81,13 @@ in {
     # --- Dev ---
     git = {
       enable = true;
-      settings.user.name = "lucas-wennstrom";
-      settings.user.email = "lucas.william.wennstrom@gmail.com";
+      settings = {
+        init.defaultBranch = "main";
+        user = {
+          name = "lucas-wennstrom";
+          email = "lucas.william.wennstrom@gmail.com";
+        };
+      };
       includes = [
         {
           condition = "gitdir:~/School/**";
@@ -106,6 +96,8 @@ in {
         }
       ];
     };
+
+    codex.enable = true;
   };
 
   # --- Fonts ---
@@ -166,9 +158,6 @@ in {
     wget
     wl-clipboard
     fastfetch
-    zoxide
-    git
-    starship
 
     # --- Desktop / WM ---
     kitty
@@ -179,7 +168,6 @@ in {
     spotify
     obsidian
     typst
-    claude-code
     brave
     unzip
   ];

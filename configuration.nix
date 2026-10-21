@@ -1,6 +1,4 @@
 {
-  config,
-  lib,
   pkgs,
   inputs,
   ...
@@ -22,16 +20,6 @@
   # --- Power management ---
   services.power-profiles-daemon.enable = true;
   services.upower.enable = true;
-  systemd.services.batter-charge-threshold = {
-    description = "Set Thinkpad battery charge threshold to 80%";
-    wantedBy = ["multi-user.target" "suspend.target" "hibernate.target"];
-    after = ["suspend.target" "hibernate.target"];
-    serviceConfig = {
-      type = "oneshot";
-      ExecStart = "${pkgs.writeShellScript "set-charge-threshold" ''
-          echo 100 > /sys/class/power_supply/BAT0/charge_control_end_threshold''}";
-    };
-  };
 
   # --- VM ---
   boot.kernelModules = ["kvm-amd"]; # Use only the one relevant to your CPU
@@ -77,7 +65,7 @@
   # --- Bluetooth ---
   hardware.bluetooth = {
     enable = true;
-    powerOnBoot = false;
+    powerOnBoot = true;
   };
   services.blueman.enable = true;
 
@@ -99,7 +87,10 @@
   };
 
   # --- Nix ---
-  nix.settings.experimental-features = ["nix-command" "flakes"];
+  nix.settings = {
+    experimental-features = ["nix-command" "flakes"];
+    auto-optimise-store = true;
+  };
   nix.gc = {
     automatic = true;
     dates = "daily";
@@ -107,7 +98,7 @@
   };
   nixpkgs.config.allowUnfree = true;
 
-  # --- Graphics ---to show the full, detailed trace)
+  # --- Graphics ---
   hardware.graphics = {
     enable = true;
     enable32Bit = true;
