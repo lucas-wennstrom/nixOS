@@ -170,5 +170,8 @@ in {
     typst
     brave
     unzip
+    steam
+    osu-lazer-bin
+    discord
   ];
 }

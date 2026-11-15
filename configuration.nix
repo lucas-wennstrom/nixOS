@@ -8,6 +8,7 @@
     inputs.niri.nixosModules.niri
   ];
 
+  services.flatpak.enable = true;
   # --- Boot ---
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
@@ -24,10 +25,7 @@
   # --- VM ---
   boot.kernelModules = ["kvm-amd"]; # Use only the one relevant to your CPU
   virtualisation.libvirtd.enable = true;
-
-  environment.systemPackages = with pkgs; [
-    virt-manager
-  ];
+  programs.virt-manager.enable = true;
 
   systemd.tmpfiles.rules = ["L+ /var/lib/qemu/firmware - - - - ${pkgs.qemu}/share/qemu/firmware"];
 
@@ -61,6 +59,11 @@
     extraPortals = [pkgs.xdg-desktop-portal-gnome pkgs.xdg-desktop-portal-gtk];
     config.common.default = ["gtk"];
   };
+
+  environment.sessionVariables.XDG_DATA_DIRS = [
+    "/var/lib/flatpak/exports/share"
+    "$HOME/.local/share/flatpak/exports/share"
+  ];
 
   # --- Bluetooth ---
   hardware.bluetooth = {
@@ -103,6 +106,22 @@
     enable = true;
     enable32Bit = true;
   };
+
+  hardware.opentabletdriver.enable = true;
+  boot.blacklistedKernelModules = ["wacom"];
+
+  environment.systemPackages = with pkgs; [
+    xorg.xrandr
+    iw
+    wireguard-tools
+    (brave.override {
+      commandLineArgs = [
+        "--ozone-platform-hint=auto"
+        "--enable-features=VaapiVideoDecodeLinuxGL"
+        "--ignore-gpu-blocklist"
+      ];
+    })
+  ];
 
   system.stateVersion = "26.05";
 }
