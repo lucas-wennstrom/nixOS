@@ -9,10 +9,15 @@
   ];
 
   services.flatpak.enable = true;
+
   # --- Boot ---
-  boot.loader.systemd-boot.enable = true;
+  boot.loader.systemd-boot.enable = false; # Lanzaboote ersätter systemd-boot
   boot.loader.efi.canTouchEfiVariables = true;
-  boot.loader.systemd-boot.configurationLimit = 4;
+  boot.lanzaboote = {
+    enable = true;
+    pkiBundle = "/var/lib/sbctl";
+    configurationLimit = 4;
+  };
 
   # --- Networking ---
   networking.hostName = "nixos";
@@ -111,6 +116,7 @@
   boot.blacklistedKernelModules = ["wacom"];
 
   environment.systemPackages = with pkgs; [
+    sbctl
     xorg.xrandr
     iw
     wireguard-tools

@@ -20,11 +20,18 @@
       url = "github:noctalia-dev/noctalia";
       inputs.nixpkgs.follows = "nixpkgs-unstable";
     };
+
+    # --- Secture boot ---
+    lanzaboote = {
+      url = "github:nix-community/lanzaboote/v1.2.0";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs = inputs @ {
     nixpkgs,
     home-manager,
+    lanzaboote,
     ...
   }: let
     system = "x86_64-linux";
@@ -46,6 +53,7 @@
             backupFileExtension = "backup";
           };
         }
+        lanzaboote.nixosModules.lanzaboote
       ];
     };
   };
